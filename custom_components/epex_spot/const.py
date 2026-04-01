@@ -33,6 +33,25 @@ CONF_SURCHARGE_PERC = "percentage_surcharge"
 CONF_SURCHARGE_ABS = "absolute_surcharge"
 CONF_TAX = "tax"
 
+# variable grid surcharge options
+CONF_GRIDSURCHARGE_STANDARD = "grid_surcharge_standard"
+
+CONF_GRIDMONTH_SLOT1 = "grid_month_slot1"
+CONF_GRIDTIMESTART_SLOT1 = "grid_time_start_slot1"
+CONF_GRIDTIMEEND_SLOT1 = "grid_time_end_slot1"
+
+CONF_GRIDMONTH_SLOT2 = "grid_month_slot2"
+CONF_GRIDTIMESTART_SLOT2 = "grid_time_start_slot2"
+CONF_GRIDTIMEEND_SLOT2 = "grid_time_end_slot2"
+
+CONF_GRIDMONTH_SLOT3 = "grid_month_slot3"
+CONF_GRIDTIMESTART_SLOT3 = "grid_time_start_slot3"
+CONF_GRIDTIMEEND_SLOT3 = "grid_time_end_slot3"
+
+CONF_GRIDMONTH_SLOT4 = "grid_month_slot4"
+CONF_GRIDTIMESTART_SLOT4 = "grid_time_start_slot4"
+CONF_GRIDTIMEEND_SLOT4 = "grid_time_end_slot4"
+
 # service call
 CONF_EARLIEST_START_TIME = "earliest_start"
 CONF_EARLIEST_START_POST = "earliest_start_post"
