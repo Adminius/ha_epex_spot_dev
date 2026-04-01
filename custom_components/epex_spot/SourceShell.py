@@ -28,6 +28,23 @@ from custom_components.epex_spot.const import (
     CONF_SURCHARGE_ABS,
     CONF_SURCHARGE_PERC,
     CONF_TAX,
+    CONF_GRIDSURCHARGE_STANDARD,
+    CONF_GRIDSURCHARGE_SLOT1,
+    CONF_GRIDMONTHS_SLOT1,
+    CONF_GRIDTIMESTART_SLOT1,
+    CONF_GRIDTIMEEND_SLOT1,
+    CONF_GRIDSURCHARGE_SLOT2,
+    CONF_GRIDMONTHS_SLOT2,
+    CONF_GRIDTIMESTART_SLOT2,
+    CONF_GRIDTIMEEND_SLOT2,
+    CONF_GRIDSURCHARGE_SLOT3,
+    CONF_GRIDMONTHS_SLOT3,
+    CONF_GRIDTIMESTART_SLOT3,
+    CONF_GRIDTIMEEND_SLOT3,
+    CONF_GRIDSURCHARGE_SLOT4,
+    CONF_GRIDMONTHS_SLOT4,
+    CONF_GRIDTIMESTART_SLOT4,
+    CONF_GRIDTIMEEND_SLOT4,
     CONF_TOKEN,
     DEFAULT_DURATION,
     DEFAULT_SURCHARGE_ABS,
@@ -53,6 +70,7 @@ _LOGGER = logging.getLogger(__name__)
 class SourceShell:
     def __init__(self, config_entry: ConfigEntry, session: aiohttp.ClientSession):
         self._config_entry = config_entry
+        self.marketdata_total = []
         self._marketdata_now = None
         self._sorted_marketdata_today = []
         self._cheapest_sorted_marketdata_today = None
@@ -153,6 +171,7 @@ class SourceShell:
         if (len(self.marketdata)) == 0:
             self._marketdata_now = None
             self._sorted_marketdata_today = []
+            self.marketdata_total = []
             return
 
         now = dt.now()
@@ -168,6 +187,7 @@ class SourceShell:
             _LOGGER.error(f"no data found for {self._source}")
             self._marketdata_now = None
             self._sorted_marketdata_today = []
+            self.marketdata_total = []
 
         # get list of entries for today
         start_of_day = now.replace(hour=0, minute=0, second=0, microsecond=0)
@@ -182,7 +202,52 @@ class SourceShell:
         )
         self._sorted_marketdata_today = sorted_sorted_marketdata_today
 
-    def to_total_price(self, market_price_per_kwh):
+        self.marketdata_total = []
+        for entry in self.marketdata:
+            total_price = self.to_total_price(
+                entry.market_price_per_kwh, 
+                entry.start_time
+            )
+            self.marketdata_total.append(total_price)
+
+    def get_grid_surcharge(self, dt):
+        if dt is None:
+            return float(self.options.get(CONF_GRIDSURCHARGE_STANDARD, 0.0))
+
+        month = dt.month
+        current_time = dt.strftime("%H:%M")
+
+        for i in range(1, 5):
+            surcharge_key = f"grid_surcharge_slot{i}"
+            months_key = f"grid_months_slot{i}"
+            start_key = f"grid_time_start_slot{i}"
+            end_key = f"grid_time_end_slot{i}"
+
+            if self.is_slot_active(surcharge_key, months_key, start_key, end_key, month, current_time):
+                return float(self.options.get(surcharge_key, 0.0))
+
+        return float(self.options.get(CONF_GRIDSURCHARGE_STANDARD, 0.0))
+
+
+    def is_slot_active(self, surcharge_key, months_key, start_key, end_key, current_month, current_time):
+        if self.options.get(surcharge_key) is None:
+            return False
+
+        months_str = str(self.options.get(months_key, "")).strip()
+        if months_str:
+            try:
+                allowed_months = {int(m.strip()) for m in months_str.split(",") if m.strip().isdigit()}
+                if current_month not in allowed_months:
+                    return False
+            except (ValueError, TypeError):
+                return False
+
+        start_time = str(self.options.get(start_key, "00:00")).strip()
+        end_time = str(self.options.get(end_key, "23:59")).strip()
+
+        return start_time <= current_time <= end_time
+    
+    def to_total_price(self, market_price_per_kwh, dt=None):
         total_price = market_price_per_kwh
 
         # Standard calculation for other cases
@@ -197,8 +262,11 @@ class SourceShell:
                 CONF_SURCHARGE_PERC, DEFAULT_SURCHARGE_PERC
             )
 
+            grid_surcharge = self.get_grid_surcharge(dt)
+            
             total_price = total_price + abs(total_price) * surcharge_pct / 100
             total_price += surcharge_abs
+            total_price += grid_surcharge
             total_price *= 1 + (tax / 100.0)
 
         return round(total_price, 6)
