@@ -224,7 +224,7 @@ class SourceShell:
 
     def get_grid_surcharge(self, dt):
         if dt is None:
-            return float(self.options.get(CONF_GRIDSURCHARGE_STANDARD, 0.0))
+            return float(self._config_entry.options.get(CONF_GRIDSURCHARGE_STANDARD, 0.0))
 
         month = dt.month
         current_time = dt.strftime("%H:%M")
@@ -236,16 +236,16 @@ class SourceShell:
             end_key = f"grid_time_end_slot{i}"
 
             if self.is_slot_active(surcharge_key, months_key, start_key, end_key, month, current_time):
-                return float(self.options.get(surcharge_key, 0.0))
+                return float(self._config_entry.options.get(surcharge_key, 0.0))
 
-        return float(self.options.get(CONF_GRIDSURCHARGE_STANDARD, 0.0))
+        return float(self._config_entry.options.get(CONF_GRIDSURCHARGE_STANDARD, 0.0))
 
 
     def is_slot_active(self, surcharge_key, months_key, start_key, end_key, current_month, current_time):
-        if self.options.get(surcharge_key) is None:
+        if self._config_entry.options.get(surcharge_key) is None:
             return False
 
-        months_str = str(self.options.get(months_key, "")).strip()
+        months_str = str(self._config_entry.options.get(months_key, "")).strip()
         if months_str:
             try:
                 allowed_months = {int(m.strip()) for m in months_str.split(",") if m.strip().isdigit()}
@@ -254,8 +254,8 @@ class SourceShell:
             except (ValueError, TypeError):
                 return False
 
-        start_time = str(self.options.get(start_key, "00:00")).strip()
-        end_time = str(self.options.get(end_key, "23:59")).strip()
+        start_time = str(self._config_entry.options.get(start_key, "00:00")).strip()
+        end_time = str(self._config_entry.options.get(end_key, "23:59")).strip()
 
         return start_time <= current_time <= end_time
     
