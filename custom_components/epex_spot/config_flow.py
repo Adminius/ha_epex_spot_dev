@@ -201,11 +201,11 @@ class EpexSpotOptionsFlow(OptionsFlowWithReload):
                         ),
                     ): vol.Coerce(float),
                     vol.Optional(
-                        CONF_GRIDMONTH_SLOT1,
+                        CONF_GRIDMONTHS_SLOT1,
                         default=self.config_entry.options.get(
-                            CONF_GRIDMONTH_SLOT1, DEFAULT_GRIDMONTH
+                            CONF_GRIDMONTHS_SLOT1, DEFAULT_GRIDMONTHS
                         ),
-                    ): vol.Coerce(int),
+                    ): str,
                     vol.Optional(
                         CONF_GRIDTIMESTART_SLOT1,
                         default=self.config_entry.options.get(
@@ -225,11 +225,11 @@ class EpexSpotOptionsFlow(OptionsFlowWithReload):
                         ),
                     ): vol.Coerce(float),
                     vol.Optional(
-                        CONF_GRIDMONTH_SLOT2,
+                        CONF_GRIDMONTHS_SLOT2,
                         default=self.config_entry.options.get(
-                            CONF_GRIDMONTH_SLOT2, DEFAULT_GRIDMONTH
+                            CONF_GRIDMONTHS_SLOT2, DEFAULT_GRIDMONTHS
                         ),
-                    ): vol.Coerce(int),
+                    ): str,
                     vol.Optional(
                         CONF_GRIDTIMESTART_SLOT2,
                         default=self.config_entry.options.get(
@@ -249,11 +249,11 @@ class EpexSpotOptionsFlow(OptionsFlowWithReload):
                         ),
                     ): vol.Coerce(float),
                     vol.Optional(
-                        CONF_GRIDMONTH_SLOT3,
+                        CONF_GRIDMONTHS_SLOT3,
                         default=self.config_entry.options.get(
-                            CONF_GRIDMONTH_SLOT3, DEFAULT_GRIDMONTH
+                            CONF_GRIDMONTHS_SLOT3, DEFAULT_GRIDMONTHS
                         ),
-                    ): vol.Coerce(int),
+                    ): str,
                     vol.Optional(
                         CONF_GRIDTIMESTART_SLOT3,
                         default=self.config_entry.options.get(
@@ -273,11 +273,11 @@ class EpexSpotOptionsFlow(OptionsFlowWithReload):
                         ),
                     ): vol.Coerce(float),
                     vol.Optional(
-                        CONF_GRIDMONTH_SLOT4,
+                        CONF_GRIDMONTHS_SLOT4,
                         default=self.config_entry.options.get(
-                            CONF_GRIDMONTH_SLOT4, DEFAULT_GRIDMONTH
+                            CONF_GRIDMONTHS_SLOT4, DEFAULT_GRIDMONTHS
                         ),
-                    ): vol.Coerce(int),
+                    ): str,
                     vol.Optional(
                         CONF_GRIDTIMESTART_SLOT4,
                         default=self.config_entry.options.get(
