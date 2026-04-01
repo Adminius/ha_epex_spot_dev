@@ -73,6 +73,7 @@ class SourceShell:
         self.marketdata_total = []
         self._marketdata_now = None
         self._sorted_marketdata_today = []
+        self._sorted_total_price_today = []
         self._cheapest_sorted_marketdata_today = None
         self._most_expensive_sorted_marketdata_today = None
 
@@ -171,6 +172,7 @@ class SourceShell:
         if (len(self.marketdata)) == 0:
             self._marketdata_now = None
             self._sorted_marketdata_today = []
+            self._sorted_total_price_today = []
             self.marketdata_total = []
             return
 
@@ -202,6 +204,16 @@ class SourceShell:
         )
         self._sorted_marketdata_today = sorted_sorted_marketdata_today
 
+        sorted_total_prices = []
+        for entry in self._sorted_marketdata_today:
+            total_price = self.to_total_price(
+                entry.market_price_per_kwh,
+                entry.start_time
+            )
+            sorted_total_prices.append(total_price)
+
+        self._sorted_total_price_today = sorted_total_prices
+        
         self.marketdata_total = []
         for entry in self.marketdata:
             total_price = self.to_total_price(
