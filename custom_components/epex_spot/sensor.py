@@ -99,24 +99,33 @@ class EpexSpotTotalPriceSensorEntity(EpexSpotEntity, SensorEntity):
 
     @property
     def native_value(self) -> StateType:
-        return self._source.to_total_price(
-            self._source.marketdata_now.market_price_per_kwh
-        )
+        if not self._source.marketdata_now:
+            return None
+
+        # Index des aktuellen Eintrags finden
+        try:
+            idx = self._source.marketdata.index(self._source.marketdata_now)
+            return self._source.marketdata_total[idx]
+        except (ValueError, IndexError, AttributeError):
+            return None
 
     @property
     def extra_state_attributes(self):
-        data = [
-            {
+        if not self._source.marketdata or not self._source.marketdata_total:
+            return {ATTR_DATA: []}
+
+        data = []
+        for e, total_price in zip(self._source.marketdata, self._source.marketdata_total):
+            data.append({
                 ATTR_START_TIME: dt_util.as_local(e.start_time).isoformat(),
                 ATTR_END_TIME: dt_util.as_local(e.end_time).isoformat(),
-                self._localized.attr_name_per_kwh: self._source.to_total_price(
-                    e.market_price_per_kwh
-                ),
-            }
-            for e in self._source.marketdata
-        ]
+                self._localized.attr_name_per_kwh: total_price,
+            })
 
-        return {ATTR_DATA: data}
+        return {
+            ATTR_DATA: data,
+            self._localized.attr_name_per_kwh: self.native_value,
+        }
 
 
 class EpexSpotBuyVolumeSensorEntity(EpexSpotEntity, SensorEntity):

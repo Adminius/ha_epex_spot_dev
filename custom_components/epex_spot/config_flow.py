@@ -188,6 +188,108 @@ class EpexSpotOptionsFlow(OptionsFlowWithReload):
                         CONF_TAX,
                         default=self.config_entry.options.get(CONF_TAX, DEFAULT_TAX),
                     ): vol.Coerce(float),
+                    vol.Optional(
+                        CONF_GRIDSURCHARGE_STANDARD,
+                        default=self.config_entry.options.get(
+                            CONF_GRIDSURCHARGE_STANDARD, DEFAULT_GRIDSURCHARGE_STANDARD
+                        ),
+                    ): vol.Coerce(float),
+                    vol.Optional(
+                        CONF_GRIDSURCHARGE_SLOT1,
+                        default=self.config_entry.options.get(
+                            CONF_GRIDSURCHARGE_SLOT1, DEFAULT_GRIDSURCHARGE_SLOT
+                        ),
+                    ): vol.Coerce(float),
+                    vol.Optional(
+                        CONF_GRIDMONTHS_SLOT1,
+                        default=self.config_entry.options.get(
+                            CONF_GRIDMONTHS_SLOT1, DEFAULT_GRIDMONTHS
+                        ),
+                    ): str,
+                    vol.Optional(
+                        CONF_GRIDTIMESTART_SLOT1,
+                        default=self.config_entry.options.get(
+                            CONF_GRIDTIMESTART_SLOT1, DEFAULT_GRIDTIMESTART
+                        ),
+                    ): str,
+                    vol.Optional(
+                        CONF_GRIDTIMEEND_SLOT1,
+                        default=self.config_entry.options.get(
+                            CONF_GRIDTIMEEND_SLOT1, DEFAULT_GRIDTIMEEND
+                        ),
+                    ): str,
+                    vol.Optional(
+                        CONF_GRIDSURCHARGE_SLOT2,
+                        default=self.config_entry.options.get(
+                            CONF_GRIDSURCHARGE_SLOT2, DEFAULT_GRIDSURCHARGE_SLOT
+                        ),
+                    ): vol.Coerce(float),
+                    vol.Optional(
+                        CONF_GRIDMONTHS_SLOT2,
+                        default=self.config_entry.options.get(
+                            CONF_GRIDMONTHS_SLOT2, DEFAULT_GRIDMONTHS
+                        ),
+                    ): str,
+                    vol.Optional(
+                        CONF_GRIDTIMESTART_SLOT2,
+                        default=self.config_entry.options.get(
+                            CONF_GRIDTIMESTART_SLOT2, DEFAULT_GRIDTIMESTART
+                        ),
+                    ): str,
+                    vol.Optional(
+                        CONF_GRIDTIMEEND_SLOT2,
+                        default=self.config_entry.options.get(
+                            CONF_GRIDTIMEEND_SLOT2, DEFAULT_GRIDTIMEEND
+                        ),
+                    ): str,
+                    vol.Optional(
+                        CONF_GRIDSURCHARGE_SLOT3,
+                        default=self.config_entry.options.get(
+                            CONF_GRIDSURCHARGE_SLOT3, DEFAULT_GRIDSURCHARGE_SLOT
+                        ),
+                    ): vol.Coerce(float),
+                    vol.Optional(
+                        CONF_GRIDMONTHS_SLOT3,
+                        default=self.config_entry.options.get(
+                            CONF_GRIDMONTHS_SLOT3, DEFAULT_GRIDMONTHS
+                        ),
+                    ): str,
+                    vol.Optional(
+                        CONF_GRIDTIMESTART_SLOT3,
+                        default=self.config_entry.options.get(
+                            CONF_GRIDTIMESTART_SLOT3, DEFAULT_GRIDTIMESTART
+                        ),
+                    ): str,
+                    vol.Optional(
+                        CONF_GRIDTIMEEND_SLOT3,
+                        default=self.config_entry.options.get(
+                            CONF_GRIDTIMEEND_SLOT3, DEFAULT_GRIDTIMEEND
+                        ),
+                    ): str,
+                    vol.Optional(
+                        CONF_GRIDSURCHARGE_SLOT4,
+                        default=self.config_entry.options.get(
+                            CONF_GRIDSURCHARGE_SLOT4, DEFAULT_GRIDSURCHARGE_SLOT
+                        ),
+                    ): vol.Coerce(float),
+                    vol.Optional(
+                        CONF_GRIDMONTHS_SLOT4,
+                        default=self.config_entry.options.get(
+                            CONF_GRIDMONTHS_SLOT4, DEFAULT_GRIDMONTHS
+                        ),
+                    ): str,
+                    vol.Optional(
+                        CONF_GRIDTIMESTART_SLOT4,
+                        default=self.config_entry.options.get(
+                            CONF_GRIDTIMESTART_SLOT4, DEFAULT_GRIDTIMESTART
+                        ),
+                    ): str,
+                    vol.Optional(
+                        CONF_GRIDTIMEEND_SLOT4,
+                        default=self.config_entry.options.get(
+                            CONF_GRIDTIMEEND_SLOT4, DEFAULT_GRIDTIMEEND
+                        ),
+                    ): str,
                     vol.Required(
                         CONF_DURATION,
                         default=self.config_entry.options.get(

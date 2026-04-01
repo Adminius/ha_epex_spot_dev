@@ -33,6 +33,29 @@ CONF_SURCHARGE_PERC = "percentage_surcharge"
 CONF_SURCHARGE_ABS = "absolute_surcharge"
 CONF_TAX = "tax"
 
+# variable grid surcharge options
+CONF_GRIDSURCHARGE_STANDARD = "grid_surcharge_standard"
+
+CONF_GRIDSURCHARGE_SLOT1 = "grid_surcharge_slot1"
+CONF_GRIDMONTHS_SLOT1 = "grid_months_slot1"
+CONF_GRIDTIMESTART_SLOT1 = "grid_time_start_slot1"
+CONF_GRIDTIMEEND_SLOT1 = "grid_time_end_slot1"
+
+CONF_GRIDSURCHARGE_SLOT2 = "grid_surcharge_slot2"
+CONF_GRIDMONTHS_SLOT2 = "grid_months_slot2"
+CONF_GRIDTIMESTART_SLOT2 = "grid_time_start_slot2"
+CONF_GRIDTIMEEND_SLOT2 = "grid_time_end_slot2"
+
+CONF_GRIDSURCHARGE_SLOT3 = "grid_surcharge_slot3"
+CONF_GRIDMONTHS_SLOT3 = "grid_months_slot3"
+CONF_GRIDTIMESTART_SLOT3 = "grid_time_start_slot3"
+CONF_GRIDTIMEEND_SLOT3 = "grid_time_end_slot3"
+
+CONF_GRIDSURCHARGE_SLOT4 = "grid_surcharge_slot4"
+CONF_GRIDMONTHS_SLOT4 = "grid_months_slot4"
+CONF_GRIDTIMESTART_SLOT4 = "grid_time_start_slot4"
+CONF_GRIDTIMEEND_SLOT4 = "grid_time_end_slot4"
+
 # service call
 CONF_EARLIEST_START_TIME = "earliest_start"
 CONF_EARLIEST_START_POST = "earliest_start_post"
@@ -44,6 +67,12 @@ DEFAULT_SURCHARGE_PERC = 3.0
 DEFAULT_SURCHARGE_ABS = 0.1193
 DEFAULT_TAX = 19.0
 DEFAULT_DURATION = 60
+
+DEFAULT_GRIDSURCHARGE_STANDARD = 0.0
+DEFAULT_GRIDSURCHARGE_SLOT = 0.0
+DEFAULT_GRIDMONTHS = ""
+DEFAULT_GRIDTIMESTART = "00:00"
+DEFAULT_GRIDTIMEEND = "23:59"
 
 EMPTY_EXTREME_PRICE_INTERVAL_RESP = {
     "start": None,
