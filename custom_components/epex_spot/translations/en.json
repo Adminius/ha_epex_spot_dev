@@ -24,7 +24,24 @@
         "data": {
           "percentage_surcharge": "Percentage Surcharge (%)",
           "absolute_surcharge": "Absolute Surcharge (€/£ per kWh)",
-          "tax": "Tax (%)"
+          "tax": "Tax (%)",
+          "grid_surcharge_standard": "Default grid surcharge",
+          "grid_surcharge_slot1": "Slot 1 grid surcharge",
+          "grid_months_slot1": "Slot 1 active month",
+          "grid_time_start_slot1": "Slot 1 start time",
+          "grid_time_end_slot1": "Slot 1 end time",
+          "grid_surcharge_slot2": "Slot 2 grid surcharge",
+          "grid_months_slot2": "Slot 2 active month",
+          "grid_time_start_slot2": "Slot 2 start time",
+          "grid_time_end_slot2": "Slot 2 end time",
+          "grid_surcharge_slo3": "Slot 3 grid surcharge",
+          "grid_months_slot3": "Slot 3 active month",
+          "grid_time_start_slot3": "Slot 3 start time",
+          "grid_time_end_slot3": "Slot 3 end time",
+          "grid_surcharge_slot4": "Slot 4 grid surcharge",
+          "grid_months_slot4": "Slot 4 active month",
+          "grid_time_start_slot4": "Slot 4 start time",
+          "grid_time_end_slot4": "Slot 4 end time"
         },
         "data_description": {
           "tax": "Like Value Added Tax (VAT)"
@@ -41,7 +58,24 @@
           "duration": "Slot duration",
           "percentage_surcharge": "Percentage Surcharge (%)",
           "absolute_surcharge": "Absolute Surcharge (€/£ per kWh)",
-          "tax": "Tax (%)"
+          "tax": "Tax (%)",
+          "grid_surcharge_standard": "Default grid surcharge",
+          "grid_surcharge_slot1": "Slot 1 grid surcharge",
+          "grid_months_slot1": "Slot 1 active month",
+          "grid_time_start_slot1": "Slot 1 start time",
+          "grid_time_end_slot1": "Slot 1 end time",
+          "grid_surcharge_slot2": "Slot 2 grid surcharge",
+          "grid_months_slot2": "Slot 2 active month",
+          "grid_time_start_slot2": "Slot 2 start time",
+          "grid_time_end_slot2": "Slot 2 end time",
+          "grid_surcharge_slo3": "Slot 3 grid surcharge",
+          "grid_months_slot3": "Slot 3 active month",
+          "grid_time_start_slot3": "Slot 3 start time",
+          "grid_time_end_slot3": "Slot 3 end time",
+          "grid_surcharge_slot4": "Slot 4 grid surcharge",
+          "grid_months_slot4": "Slot 4 active month",
+          "grid_time_start_slot4": "Slot 4 start time",
+          "grid_time_end_slot4": "Slot 4 end time"
         },
         "data_description": {
           "tax": "Like Value Added Tax (VAT)"
