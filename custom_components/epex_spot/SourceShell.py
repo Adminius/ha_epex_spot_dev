@@ -224,10 +224,13 @@ class SourceShell:
 
     def get_grid_surcharge(self, dt):
         if dt is None:
-            return float(self._config_entry.options.get(CONF_GRIDSURCHARGE_STANDARD, 0.0))
+            standard = float(self._config_entry.options.get(CONF_GRIDSURCHARGE_STANDARD, 0.0))
+            return standard
 
-        month = dt.month
-        current_time = dt.strftime("%H:%M")
+        dt_local = dt_util.as_local(dt)
+        month = dt_local.month
+        current_time = dt_local.strftime("%H:%M")
+        current_dt_str = dt_local.strftime("%Y-%m-%d %H:%M")
 
         for i in range(1, 5):
             surcharge_key = f"grid_surcharge_slot{i}"
@@ -235,29 +238,66 @@ class SourceShell:
             start_key = f"grid_time_start_slot{i}"
             end_key = f"grid_time_end_slot{i}"
 
-            if self.is_slot_active(surcharge_key, months_key, start_key, end_key, month, current_time):
-                return float(self._config_entry.options.get(surcharge_key, 0.0))
+            surcharge_val = self._config_entry.options.get(surcharge_key)
 
-        return float(self._config_entry.options.get(CONF_GRIDSURCHARGE_STANDARD, 0.0))
+            months_raw = self._config_entry.options.get(months_key, "")
+            months_str = str(months_raw).strip()
+
+            if not months_str or months_str.strip() in ("0", "0,"):
+                continue
+
+            if surcharge_val is None:
+                continue
+
+            if self.is_slot_active(surcharge_key, months_key, start_key, end_key, month, current_time):
+                value = float(surcharge_val)
+                return value
+
+        standard = float(self._config_entry.options.get(CONF_GRIDSURCHARGE_STANDARD, 0.0))
+        return standard
 
 
     def is_slot_active(self, surcharge_key, months_key, start_key, end_key, current_month, current_time):
-        if self._config_entry.options.get(surcharge_key) is None:
-            return False
-
         months_str = str(self._config_entry.options.get(months_key, "")).strip()
+        start_str = str(self._config_entry.options.get(start_key, "00:00")).strip()
+        end_str = str(self._config_entry.options.get(end_key, "00:00")).strip()
+
         if months_str:
             try:
-                allowed_months = {int(m.strip()) for m in months_str.split(",") if m.strip().isdigit()}
-                if current_month not in allowed_months:
+                allowed = {int(m.strip()) for m in months_str.split(",") if m.strip().isdigit()}
+                if current_month not in allowed:
                     return False
-            except (ValueError, TypeError):
+            except Exception:
                 return False
 
-        start_time = str(self._config_entry.options.get(start_key, "00:00")).strip()
-        end_time = str(self._config_entry.options.get(end_key, "23:59")).strip()
+        try:
+            if len(start_str) == 4 and start_str[1] == ":":
+                start_str = "0" + start_str
+            if len(end_str) == 4 and end_str[1] == ":":
+                end_str = "0" + end_str
 
-        return start_time <= current_time <= end_time
+            def to_minutes(t: str) -> int:
+                h, m = map(int, t.split(":"))
+                return h * 60 + m
+
+            curr = to_minutes(current_time)
+            start = to_minutes(start_str)
+            end = to_minutes(end_str)
+
+            if end == 0:
+                end = 1440
+                result = start <= curr
+                return result
+
+            if start < end:
+                result = start <= curr < end
+                return result
+            else:
+                result = (curr >= start) or (curr < end)
+                return result
+
+        except Exception as e:
+            return False
     
     def to_total_price(self, market_price_per_kwh, dt=None):
         total_price = market_price_per_kwh
